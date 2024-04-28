@@ -4,38 +4,99 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= title %></title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            background-color: #f8f9fa; /* Set a consistent background color */
+        }
+        .container {
+            margin-top: 50px; /* Add some space from the top */
+        }
+        .table {
+            text-align: center; /* Center-align the table */
+        }
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #343a40; /* Set a consistent footer background color */
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }
+    </style>
 </head>
 <body>
 
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Phone</th>
-                <th>Average Rating</th>
-                <th>Total Ratings</th>
-                <th><a href="">Rate now</a></th>
-            </tr>       
-        </thead>
-        <% for( let index = 0; index < data.length; index++ ) { %>
-            <tr>
-                <td><%= index+1 %></td>
-                <td><%= data[index].name %></td>
-                <td><%= data[index].phone %></td>
-                <td><%=  %>
-                <% if (data[index].reviewCount == 0) { %>
-                 not yet rated
-                <% } else { %>
-                <%= data[index].reviewSum/data[index].reviewCount %>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">Cafe Rating Website</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>Average Rating</th>
+                    <th>Total Ratings</th>
+                    <th>Actions</th>
+                </tr>       
+            </thead>
+            <tbody>
+                <% for( let index = 0; index < data.length; index++ ) { %>
+                    <tr>
+                        <td><%= index+1 %></td>
+                        <td><%= data[index].name %></td>
+                        <td><%= data[index].phone %></td>
+                        <td>
+                            <% if (data[index].reviewCount == 0) { %>
+                                not yet rated
+                            <% } else { %>
+                                <%= (data[index].reviewSum/data[index].reviewCount).toFixed(2) %>
+                            <% } %>
+                        </td>
+                        <td><%= data[index].reviewCount %></td>
+                        <td><a href="/rate/<%= data[index].id %>">Rate now</a></td>
+                    </tr>
                 <% } %>
-            </td>
-                <td><%= data[index].reviewCount %></td>
-                <td><%=  %></td>
-            </tr>
-        <% } %>
-       
-    </table>
-    <a href="/add">Add a new Cafe</a>
+            </tbody>
+        </table>
+        <a href="/add" class="btn btn-primary">Add a new Cafe</a>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>&copy; 2024 Your Website. All rights reserved.</p>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

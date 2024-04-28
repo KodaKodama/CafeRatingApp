@@ -10,7 +10,6 @@ router.get('/', async (req, res)=> {
             data: cafes
             
         });
-        res.send("hello world")
     }catch(e){
         res.send(e);
     }
@@ -31,11 +30,41 @@ router.post('/add', async(req, res)=> {
         });
         await cafe.save();
         console.log('save data');
-        res.redirect('/');
-        res.send(cafe);
+        return res.redirect('/');
     }catch(e){
-        console.log(e);
+        return res.send(e);
     }
 });
+
+router.get('/rate/:id', async(req, res)=> {
+    const id = req.params.id;
+    try{
+        const cafe = await Object.findById(id);
+        return res.render("rate_cafe", {
+            title: "Rate cafe", 
+            cafe: cafe
+        });
+    }catch(e){
+        return res.send(e);
+    }
+});
+
+router.post('/rate/:id', async(req, res)=> {
+    const id = req.params.id;
+    const rating = parseInt(req.body.rating);
+    try{
+        const cafe = await Object.findById(id);
+        const newSum = parseInt(cafe.reviewSum+rating);
+        const newCount = cafe.reviewCount+1;
+        await Object.findByIdAndUpdate(id, {
+            reviewSum: newSum,
+            reviewCount: newCount,
+        });
+       return res.redirect('/');
+        
+    }catch(e){
+        return res.send(e);
+    }
+})
 
 module.exports = router;

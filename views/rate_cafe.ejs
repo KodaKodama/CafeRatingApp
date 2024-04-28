@@ -57,15 +57,16 @@
     </nav>
 
     <div class="container">
-        <h1>Add new Cafe</h1>
-        <form action="/add" method="post">
+        <h1>Rate Cafe</h1>
+        <p><strong>Name: </strong><%= cafe.name %></p>
+        <p><strong>Phone: </strong><%= cafe.phone %></p>
+        <p><strong>Total Ratings: </strong><%= cafe.reviewCount %></p>
+        <form action="/rate/<%= cafe.id %>" method="post">
             <div class="form-group">
-                <input type="text" class="form-control" name="name" placeholder="Enter the name of cafe" required>
+                <label for="rating">Give your rating</label>
+                <input type="number" class="form-control" name="rating" id="rating" min="1" max="5" required>
             </div>
-            <div class="form-group">
-                <input type="text" class="form-control" name="phone" placeholder="Enter the phone number of cafe">
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary">Submit Rating</button>    
         </form>
     </div>
 
